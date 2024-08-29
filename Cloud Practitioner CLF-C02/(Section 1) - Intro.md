@@ -24,9 +24,6 @@
 https://aws.amazon.com/free
 ### Link to question set
 https://explore.skillbuilder.aws/learn/course/external/view/elearning/I4050/aws-certified-cloud-practioner-official-practice-question-set-clf-c02-english
-### Link to code and Slides
-https://courses.datacumulus.com/downloads/certified-cloud-practitioner-zb2/
-
 
 # For Future 
 1. Associate Certificate: Developer (One year)
