@@ -14,22 +14,22 @@
 
 
 ### Sample Exam question
-
-#### Which AWS service would simplify the migration of a database to AWS?
+##### Which AWS service would simplify the migration of a database to AWS?
 1. AWS Storage Gateway <span style="color:rgb(198, 180, 184)"><< = we will learn</span>
 2. AWS Database Migration Service  <span style="color:rgb(162, 202, 113)"> << = correct answer</span> 
 3. Amazon EC2 <span style="color:rgb(190, 190, 194)"><< = we will learn</span>
 4. Amazon AppStream 2.0  <span style="color:rgb(199, 37, 62)"><< = distractor -  ( over 200 services in AWS )</span>
 
-### Link to question set
-https://explore.skillbuilder.aws/learn/course/external/view/elearning/I4050/aws-certified-cloud-practioner-official-practice-question-set-clf-c02-english
-
-
-### For Future 
-1. Associate Certificate: Developer (One year)
-2. Professional Certificate: DevOps Engineer (Two years)
-
 ### Link to AWS Free Tier info
 https://aws.amazon.com/free
+### Link to question set
+https://explore.skillbuilder.aws/learn/course/external/view/elearning/I4050/aws-certified-cloud-practioner-official-practice-question-set-clf-c02-english
+### Link to code and Slides
+https://courses.datacumulus.com/downloads/certified-cloud-practitioner-zb2/
 
 
+# For Future 
+1. Associate Certificate: Developer (One year)
+2. Professional Certificate: DevOps Engineer (Two years)
+# Goal
+Ideally i would love to finish the course and maybe start the process for the exam by the end of the year, but because i have already good understanding of the cloud practitioner exam and have basic knowledge of the AWS cloud platform i will aim to have it done fully by the end November.
