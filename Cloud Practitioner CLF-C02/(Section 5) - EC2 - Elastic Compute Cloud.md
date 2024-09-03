@@ -158,3 +158,171 @@ https://www.ec2instances.info/
 - 80 = HTTP - access unsecured websites
 - 443 = HTTPS - access secured websites
 - 3389 = RDP ( Remote Desktop Protocol ) - log into a Windows instance
+
+### SSH Troubleshooting
+- **There's a connection timeout**
+	- This is a security group issue. Any timeout (not just for SSH) is related to security groups or a firewall. Ensure your security group looks like this and correctly assigned to your EC2 instance.
+- **There's still a connection timeout issue**
+	- If your security group is properly configured as above, and you still have connection timeout issues, then that means a corporate firewall or a personal firewall is blocking the connection. **Please use EC2 Instance Connect as described in the next lecture.**
+- **SSH does not work on Windows**
+	- If it says: `ssh command not found`, that means you have to use Putty
+	- Try to use EC2 Instance Connect
+- **There's a connection refused**
+	- This means the instance is reachable, but no SSH utility is running on the instance
+		- Try to restart the instance
+		-  If it doesn't work, terminate the instance and create a new one. Make sure you're using **Amazon Linux 2**
+- **Permission denied (publickey,gssapi-keyex,gssapi-with-mic)**
+	- You are using the wrong security key or not using a security key. Please look at your EC2 instance configuration to make sure you have assigned the correct key to it.
+	-  You are using the wrong user. Make sure you have started an **Amazon Linux 2 EC2 instance**, and make sure you're using the user **ec2-user.** This is something you specify when doing `**ec2-user@**<public-ip>` (ex: `ec2-user@35.180.242.162`) in your SSH command or your Putty configuration
+
+
+### EC2 Instances Purchasing Options
+- ==On-Demand Instances==:
+	- short workload
+	- predictable pricing
+	- pay by second
+- ==Reserved== ( 1 & 3 years ):
+	- Reserved Instances
+		- long workloads
+	- Convertible Reserved instances
+		- long workloads with flexible instances
+- ==Saving Plans== ( 1 & 3 years ):
+	- commitment to a amount of usage
+	- long workloads
+- ==Spot Instances==:
+	- short workloads
+	- cheap
+	- can lose instances ( less reliable )
+- ==Dedicated Hosts==:
+	- book an entire physical sever
+	- control instance placements
+- ==Dedicated Instances==:
+	- no other customers will share your hardware
+- ==Capacity Reservations==:
+	- reserve capacity in specific AZ for any duration
+
+
+### EC2 On Demand
+- Pay for what you use:
+	- Linux or Windows - billing per second, after the first minute
+	- All other operating systems - billing per hour
+- Has the highest cost but no upfront payment
+- No long-term commitment 
+- Recommended for short-term and un-interrupted workloads, where you can't predict how the application will behave
+
+### EC2 Reserved
+- XX% (right now up to 72%, but can change ) discount compared to On-demand
+- You reserve a specific instance attributes ( Instance Types, Region, Tenancy, OS )
+- Reservation period
+	- 1 year ( discount + )
+	- 3 years ( discount +++ )
+- Payment options
+	- No upfront ( + )
+	- Partial upfront ( ++ )
+	- All upfront ( +++ )
+- Reserved Instance's Scopes
+	- Regional
+	- Zonal ( reserved capacity in an AZ )
+- Recommended for steady-state usage applications ( think databases )
+- You can buy and sell in Reserved Instance Marketplace
+
+#### Convertible Reserved Instances
+- Can change the EC2 instance type, instance family, OS scope and tenancy
+- less discount then regular Reserved instances ( up to 54% right now )
+
+### EC2 Savings Plans
+- Get a discount based on long-term usage ( save discount as RIs )
+- Commit to a certain type of usage ( $10/hour for 1 or 3 years : example )
+- Usage beyond EC2 Savings Plans is billed at the On-Demand price
+- Locked to a specific instance family & AWS region ( e.g M5 in us-east-1 )
+- Flexible across:
+	- Instance Size ( e.g m5.xlarge, m5.2xlarge)
+	- OS ( e.g Linux, Windows)
+	- Tenancy ( Host, Dedicated, Default )
+
+
+###  EC2 Sport Instances
+- Can get a discount of up to 90% compared to On-demand
+- Instances that you can "lose" at any point of time if your max price is less than the current spot price
+- The Most cost-efficient instances in AWS
+- Useful for workloads that are resilient to failure
+	- Batch job
+	- Data analysis
+	- Image processing
+	- Any distributed workloads
+	- Workloads with flexible start and end time
+- Not suitable for critical jobs or databases
+
+### EC2 Dedicated Hosts
+
+- A physical server with EC2 instance capacity fully dedicated to your use
+- Allows you address compliance requirements and use your existing server-bound software licenses ( per-socket, per-core, per-VM software licenses )
+- Purchasing Options:
+    - On-demand - pay per second for active Dedicated Host
+    - Reserved - 1 or 3 years ( No Upfront, Partial Upfront, All Upfront )
+- The most expensive option
+- Useful for software that have complicated licensing model ( BYOL - Bring Your Own License )
+- Or for companies that have strong regulatory or compliance needs
+
+### EC2 Dedicated Instances
+- Instances run on hardware that's dedicated to you
+- May share hardware with other instances in same account
+- No control over instance placements ( can move hardware after Start / Stop )
+
+| Characteristic                                         | Dedicated Instances | Dedicated Hosts |
+| ------------------------------------------------------ | ------------------- | --------------- |
+| Enables the use of dedicated physical servers          | X                   | X               |
+| Per Instance billing ( subject to a $2 per region fee) | X                   |                 |
+| Per host billing                                       |                     | X               |
+| Visibility of sockets, cores, host ID                  |                     | X               |
+| Affinity between host and instance                     |                     | X               |
+| Targeted instance placements                           |                     | X               |
+| Automatic instance placement                           | X                   | X               |
+| Add capacity using an allocation request               |                     | X               |
+
+### EC2 Capacity Reservations
+- Reserve On-Demand instances capacity in a specific AZ for any duration
+- You always have access to EC2 capacity when you need it
+- No time commitment (create / cancel anytime ), no billing discounts
+- Combine with Regional Reserved Instances and Saving Plans to benefit from billing discounts
+- You're charged at On-Demand rate whether you run instances or not
+- Suitable for short-term, uninterrupted workloads that needs to be in a specific AZ
+
+
+
+### Price Comparison
+#### Example - m4.large - us-east-1
+
+| Price Type                               | Price ( per hour )                             |
+| ---------------------------------------- | ---------------------------------------------- |
+| On-Demand                                | $0.10                                          |
+| Spot Instances ( Spot Price )            | $0.038 - $0.039 ( up to 61% off)               |
+| Reserved Instances ( 1 year )            | $0.062 ( No Upfront ) - $0.058 ( All Upfront ) |
+| Reserved Instances ( 3 years )           | $0.043 ( No Upfront ) - $0.037 ( All Upfront ) |
+| EC2 Savings Plan ( 1 year )              | $0.062 ( No Upfront ) - $0.058 ( All Upfront ) |
+| Reserved Convertible Instance ( 1 year ) | $0.071 ( No Upfront ) - $0.066 ( All Upfront ) |
+| Dedicated Host                           | On-Demand Price                                |
+| Dedicated Host Reservation               | Up to 70% off                                  |
+| Capacity Reservation                     | On-Demand Price                                |
+
+### Shared Responsibility Model for EC2
+- AWS
+	- Infrastructure ( global network security )
+	- Isolation on physical hosts
+	- Replacing faulty hardware
+	- Compliance validation
+- You
+	- Security Group rules
+	- Operating-system patches and updates
+	- Software and utilities installed on EC2 instances
+	- IAM Roles assigned to EC2 & IAM user access management
+	- Data security on your instance
+
+
+### EC2 Section - Summary
+- EC2 Instances: AMI ( OS ) + Instance Size ( CPU + RAM ) + Storage + security groups + EC2 User Data
+- Security Group: Firewall attached to the EC2 instance
+- User Data: script launched at the first launch of the instance
+- SSH: start of terminal into our EC2 instances ( port 22 )
+- EC2 Instance roles: link to IAM roles
+- Purchasing Options: On-Demand, Sport, Reserver ( Standard + Convertible ), Dedicated Host, Dedicated Instance
