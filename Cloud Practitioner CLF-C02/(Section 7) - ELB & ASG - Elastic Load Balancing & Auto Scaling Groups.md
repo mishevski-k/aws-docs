@@ -116,3 +116,7 @@
 	- Implement elasticity for you application across multiple AZ
 	- Scale EC2 instances based on demand on your system, replace unhealthy
 	- Integrate with the ELB
+
+
+
+	
