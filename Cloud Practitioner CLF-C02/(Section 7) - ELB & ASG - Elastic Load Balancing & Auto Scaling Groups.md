@@ -69,3 +69,50 @@
 | HTTP / HTTPS / gRPC protocols ( Layer 7 ) | TCP / UDP protocols ( Layer 4 )                   | GENEVE Protocol on IP Packets ( Layer 3 )                   |
 | HTTP routing features                     | High performance: millions of request per seconds | Route Traffic to Firewalls that you manage on EC2 Instances |
 | Static DNS ( URL )                        | Static IP through Elastic IP                      | Intrusion detection                                         |
+
+### What's an Auto Scaling Group
+- In real-life, the load on your websites and application can change
+- In the cloud, you can create and get rid of servers very quickly
+- The goal of an Auto Scaling Group ( ==ASG== ) is to:
+	- Scale out ( add EC2 instances ) to match increased load
+	- Scale in ( remove EC2 instances ) to match decreased load
+	- Ensure we have an minimum and maximum number of machines running
+	- Automatically register new instances to load balancer
+	- Replace unhealthy instances
+- Cost Savings: only run at an optimal capacity ( principle of the cloud )
+
+### Auto Scaling Group consists
+- Minimum amount instances
+- Desired amount of instances
+- Maximum amount instances
+
+### Auto Scaling Groups - Scaling Strategies 
+- Manual Scaling: Update the size of an ASG manually
+- Dynamic Scaling:
+	- Simple / Step Scaling
+		- When a CloudWatch alarm is triggered ( example CPU > 70% ), then add units
+		- When a CloudWatch alarm is triggered ( example CPU < 30% ), then remove 1
+	- Target Tracking Scaling
+		- Example: I want the average ASG CPU to stay at around 40%
+	- Scheduled Scaling
+		- Anticipate a scaling based on know usage patterns
+		- Example: increase the min. capacity to 10 at 5pm on Fridays
+- Predictive Scaling
+	- Use Machine Learning to predict future traffic ahead of time
+	- Automatically provisions the right number of EC2 instances in advance
+	- Useful when you load has predictable time based patterns
+
+### ELB & ASG - Summary
+- High Availability vs Scalability ( vertical vs horizontal ) vs Elasticity vs Agility in the cloud
+- Elastic Load Balances ( ==ELB== )
+	- Distribute traffic across backend EC2 instances, can be Multi-AZ
+	- Support health checks
+	- 4 types: 
+		- Classic ( old - depreciated )
+		- Application ( HTTP & HTTPS - Layer 7 )
+		- Network ( UTP & TCP - Layer 4 )
+		- Gateway ( Layer 3 )
+- Auto Scaling Groups ( ==ASG== )
+	- Implement elasticity for you application across multiple AZ
+	- Scale EC2 instances based on demand on your system, replace unhealthy
+	- Integrate with the ELB
